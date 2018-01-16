@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class RenderImageFromGoogle  : MonoBehaviour
+public class GetImageFromWebPage : MonoBehaviour
 {
 
     #region Public Members
-    public string url = "https://trello-attachments.s3.amazonaws.com/5a5baaeb7ab77faf698ec795/5a5bb068244479818cabe109/e8ab72192289f7adc0688a3380d953a7/image.png";
+    public string m_urlImage = "https://wallpaperclicker.com/storage/wallpaper/High-Definition-Ultra-HD-Wallpaper-96262544.jpg";
+    public RawImage _rawImage;
+
+
+
     #endregion
 
 
@@ -15,21 +20,21 @@ public class RenderImageFromGoogle  : MonoBehaviour
     #endregion
     IEnumerator GetImage()
     {
-        using (WWW www = new WWW(url))
-        {
-            yield return www;
-            Renderer renderer = GetComponent<Renderer>();
-            renderer.material.mainTexture = www.texture;
-        }
+        WWW www = new WWW(m_urlImage);
+        yield return www;
+        _rawImage.texture = www.texture;
     }
 
     #region System
 
-    void Awake () 
+    public void FetchImage()
     {
         StartCoroutine("GetImage");
+    }
+    void Awake () 
+    {
         
-
+        
     }
 
     #endregion
